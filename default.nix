@@ -1,6 +1,6 @@
 {
+  bun2nix,
   stdenv,
-  pkgs,
   ...
 }:
 stdenv.mkDerivation {
@@ -8,20 +8,20 @@ stdenv.mkDerivation {
   version = "0.1.0";
 
   src = ./.;
-  nativebuildinputs = [
-    pkgs.bun2nix.hook
+  nativeBuildInputs = [
+    bun2nix.hook
   ];
 
-  bundeps = pkgs.bun2nix.fetchBunDeps {
+  bunDeps = bun2nix.fetchBunDeps {
     bunNix = ./bun.lock.nix;
   };
 
   buildPhase = ''
-  bun run build
+    bun run build
   '';
 
   installPhase = ''
-    # mkdir -p $out
-    # cp -r ./dist/* $out/
+    mkdir -p $out
+    cp -r ./dist/* $out/
   '';
 }
