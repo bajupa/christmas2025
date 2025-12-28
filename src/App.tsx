@@ -3,7 +3,7 @@ import './App.css'
 import { PitchDetector } from 'pitchy'
 
 function App() {
-	const [pitch, setPitch] = createSignal(0)
+	const [_, setPitch] = createSignal(0)
 	const [loudness, setLoudness] = createSignal(0)
 	let audioElement: HTMLAudioElement
 
@@ -26,7 +26,7 @@ function App() {
 		function updatePitch() {
 			analyser.getFloatTimeDomainData(buffer)
 
-			const [pitch, clarity] = detector.findPitch(buffer, audioContext.sampleRate)
+			const [pitch, _] = detector.findPitch(buffer, audioContext.sampleRate)
 			setPitch(pitch / 100)
 
 			let sum = 0
@@ -47,9 +47,9 @@ function App() {
 	return (
 		<>
 			<div class='flex justify-center items-center h-screen flex-col gap-4 transform'>
-				<audio ref={(el) => audioElement = el} id='audio' src='song.mp3' controls/>
+				<audio ref={(el) => audioElement = el} id='audio' src='song.mp3' controls />
 				<div class='relative w-3/4'>
-					<img src='christmas.svg' class='absolute top-0 left-0 w-full z-10 sepia object-cover overflow-hidden object-top' style={{height: `${100 - (loudness() / 0.15) * 100}%` }}/>
+					<img src='christmas.svg' class='absolute top-0 left-0 w-full z-10 sepia object-cover overflow-hidden object-top' style={{ height: `${100 - (loudness() / 0.15) * 100}%` }} />
 					<img src='christmas.svg' class='opacity-50' />
 				</div>
 			</div>
